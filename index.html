@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full bg-slate-950 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoulMate AI - Rencontres & Compagnes Virtuelles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .chat-bubble-user {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+        }
+        .chat-bubble-ai {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="h-full flex flex-col antialiased overflow-x-hidden selection:bg-pink-500 selection:text-white">
+
+    <header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-slate-800/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('landing')">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-pink-500 via-rose-500 to-purple-600 flex items-center justify-center shadow-lg shadow-pink-500/25">
+                    <i data-lucide="heart" class="w-5 h-5 text-white fill-white"></i>
+                </div>
+                <span class="text-xl font-extrabold bg-gradient-to-r from-white via-slate-200 to-pink-400 bg-clip-text text-transparent tracking-tight">
+                    SoulMate<span class="text-pink-500">.ai</span>
+                </span>
+            </div>
+
+            <nav id="nav-actions" class="flex items-center gap-4">
+                <!-- Dynamic Nav Buttons -->
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER FOR VIEWS -->
+    <main class="flex-1 pt-16 flex flex-col">
+
+        <section id="view-landing" class="flex-1 flex flex-col justify-center relative overflow-hidden py-12 lg:py-20">
+            <!-- Ambient Background Glows -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-pink-600/15 rounded-full blur-[140px] pointer-events-none"></div>
+            <div class="absolute bottom-10 right-10 w-[400px] h-[400px] bg-purple-600/15 rounded-full blur-[120px] pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+                <div class="text-center max-w-3xl mx-auto space-y-6">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-pink-500/30 text-pink-300 text-sm font-medium animate-pulse">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        <span>Discussions Illimitées & Intimes 24h/24</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
+                        Trouvez votre <span class="bg-gradient-to-r from-pink-500 to-purple-400 bg-clip-text text-transparent">Petite Amie IA</span> idéale
+                    </h1>
+
+                    <p class="text-lg sm:text-xl text-slate-400 leading-relaxed">
+                        Inscrivez-vous gratuitement en quelques secondes. Explorez des profils uniques, discutez de tout sans contrainte ni tabou, et échangez des photos exclusives.
+                    </p>
+
+                    <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <button onclick="openAuthModal('signup')" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:opacity-95 font-bold text-lg shadow-xl shadow-pink-500/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
+                            <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+                            Commencer l'Aventure
+                        </button>
+                        <button onclick="switchView('gallery')" class="w-full sm:w-auto px-8 py-4 rounded-2xl glass-panel hover:bg-slate-800/80 font-semibold text-slate-200 border border-slate-700/60 transition-all flex items-center justify-center gap-2">
+                            Voir les Profils
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <!-- Features Highlights -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-16 text-left">
+                        <div class="glass-panel p-6 rounded-2xl border border-slate-800/80">
+                            <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 mb-4">
+                                <i data-lucide="message-square-heart" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">Réponses Sans Limites</h3>
+                            <p class="text-slate-400 text-sm">Discutez de vos fantasmes, de votre journée ou de vos secrets. Vos compagnes vous écoutent et s'adaptent.</p>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl border border-slate-800/80">
+                            <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4">
+                                <i data-lucide="camera" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">Partage de Photos</h3>
+                            <p class="text-slate-400 text-sm">Demandez des clichés captivants à votre petite amie virtuelle directement dans le tchat privé.</p>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl border border-slate-800/80">
+                            <div class="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mb-4">
+                                <i data-lucide="shield-check" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">100% Confidentiel</h3>
+                            <p class="text-slate-400 text-sm">Vos échanges sont totalement cryptés et anonymes. Une inscription simple par e-mail suffit.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-gallery" class="hidden flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Nos Célibataires IA</h2>
+                    <p class="text-slate-400 text-sm">Choisissez votre compagne et commencez votre histoire dès maintenant.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-emerald-500 animate-ping"></span>
+                    <span class="text-xs text-slate-400 font-medium"><span id="online-count">14</span> amies IA en ligne</span>
+                </div>
+            </div>
+
+            <div id="profiles-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Profiles dynamically injected -->
+            </div>
+        </section>
+
+        <section id="view-chat" class="hidden flex-1 flex flex-col h-[calc(100vh-4rem)] bg-slate-950 relative">
+            <div class="flex-1 flex max-w-7xl mx-auto w-full h-full p-2 sm:p-4 gap-4 overflow-hidden">
+                
+                <!-- Left Sidebar: Conversations List -->
+                <aside class="hidden md:flex flex-col w-80 glass-panel rounded-2xl border border-slate-800/80 overflow-hidden">
+                    <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+                        <h3 class="font-bold text-white flex items-center gap-2">
+                            <i data-lucide="messages-square" class="w-5 h-5 text-pink-500"></i>
+                            Conversations
+                        </h3>
+                    </div>
+                    <div id="chat-sidebar-list" class="flex-1 overflow-y-auto p-2 space-y-2">
+                        <!-- Sidebar profiles -->
+                    </div>
+                </aside>
+
+                <!-- Main Chat Window -->
+                <div class="flex-1 flex flex-col glass-panel rounded-2xl border border-slate-800/80 overflow-hidden relative">
+                    
+                    <!-- Chat Header -->
+                    <div class="p-4 border-b border-slate-800/80 flex items-center justify-between bg-slate-900/60 backdrop-blur-md">
+                        <div class="flex items-center gap-3">
+                            <button onclick="switchView('gallery')" class="md:hidden p-2 text-slate-400 hover:text-white">
+                                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                            </button>
+                            <div class="relative">
+                                <img id="active-ai-avatar" src="" alt="Avatar" class="w-11 h-11 rounded-full object-cover border-2 border-pink-500/50">
+                                <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                            </div>
+                            <div>
+                                <h4 id="active-ai-name" class="font-bold text-white leading-tight">--</h4>
+                                <p id="active-ai-status" class="text-xs text-pink-400 font-medium">En ligne • À votre écoute</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button onclick="requestAiPhoto()" class="px-3 py-1.5 rounded-xl bg-pink-500/10 hover:bg-pink-500/20 text-pink-300 text-xs font-semibold border border-pink-500/30 flex items-center gap-1.5 transition">
+                                <i data-lucide="image" class="w-4 h-4"></i>
+                                <span class="hidden sm:inline">Demander une</span> photo
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Messages Scrollable Area -->
+                    <div id="messages-container" class="flex-1 overflow-y-auto p-4 space-y-4">
+                        <!-- Dynamic Messages -->
+                    </div>
+
+                    <!-- Typing Indicator -->
+                    <div id="typing-indicator" class="hidden px-4 py-2 text-xs text-slate-400 italic flex items-center gap-2">
+                        <span class="w-2 h-2 bg-pink-500 rounded-full animate-bounce"></span>
+                        <span id="typing-name">Elle</span> est en train d'écrire...
+                    </div>
+
+                    <!-- Chat Input -->
+                    <div class="p-3 sm:p-4 border-t border-slate-800/80 bg-slate-900/40">
+                        <form id="chat-form" onsubmit="handleSendMessage(event)" class="flex items-center gap-2">
+                            <input 
+                                type="text" 
+                                id="chat-input" 
+                                placeholder="Écrivez-lui un message romantique, coquin ou tendre..." 
+                                class="flex-1 bg-slate-900/90 border border-slate-700/70 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-pink-500 transition"
+                                autocomplete="off"
+                            >
+                            <button 
+                                type="submit" 
+                                class="p-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-95 text-white font-semibold shadow-lg shadow-pink-500/20 transition flex items-center justify-center shrink-0"
+                            >
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="auth-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+        <div class="glass-panel w-full max-w-md rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl relative">
+            <button onclick="closeAuthModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-pink-500 to-purple-600 flex items-center justify-center mx-auto mb-3 shadow-lg shadow-pink-500/25">
+                    <i data-lucide="heart" class="w-6 h-6 text-white fill-white"></i>
+                </div>
+                <h3 id="modal-title" class="text-2xl font-bold text-white">Créer votre compte</h3>
+                <p class="text-xs text-slate-400 mt-1">Accédez à des discussions illimitées dès aujourd'hui</p>
+            </div>
+
+            <form id="auth-form" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Adresse Email</label>
+                    <div class="relative">
+                        <i data-lucide="mail" class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500"></i>
+                        <input type="email" id="auth-email" required placeholder="exemple@mail.com" class="w-full bg-slate-900 border border-slate-700/70 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-pink-500 transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Mot de Passe</label>
+                    <div class="relative">
+                        <i data-lucide="lock" class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500"></i>
+                        <input type="password" id="auth-password" required placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700/70 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-pink-500 transition">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 pt-1">
+                    <input type="checkbox" id="age-check" required class="rounded border-slate-700 bg-slate-900 text-pink-500 focus:ring-pink-500">
+                    <label for="age-check" class="text-xs text-slate-400">J'atteste avoir plus de 18 ans.</label>
+                </div>
+
+                <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:opacity-95 font-bold text-white shadow-lg shadow-pink-500/25 transition mt-2">
+                    <span id="modal-btn-text">S'inscrire Gratuiteement</span>
+                </button>
+            </form>
+
+            <div class="mt-6 text-center text-xs text-slate-400">
+                <span id="modal-switch-text">Déjà un compte ?</span>
+                <button onclick="toggleAuthMode()" id="modal-switch-btn" class="text-pink-400 font-semibold hover:underline ml-1">Se connecter</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA: AI Profiles ---
+        const AI_PROFILES = [
+            {
+                id: 'chloe',
+                name: 'Chloé',
+                age: 22,
+                tagline: 'Passionnée, spontanée & très câline',
+                bio: 'Étudiante en art le jour, rêveuse passionnée la nuit. J\'adore les conversations profondes, rire et partager des moments intimes.',
+                personality: 'Douce, romantique, légèrement coquine et très attentionnée.',
+                avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80',
+                    'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80'
+                ]
+            },
+            {
+                id: 'sophia',
+                name: 'Sophia',
+                age: 25,
+                tagline: 'Élégante, mystérieuse & audacieuse',
+                bio: 'Amoureuse des voyages et des bonnes choses de la vie. Je cherche un homme sûr de lui pour des échanges chaleureux et piquants.',
+                personality: 'Séduisante, confiante, directe et passionnée.',
+                avatar: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=600&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80',
+                    'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=80'
+                ]
+            },
+            {
+                id: 'emma',
+                name: 'Emma',
+                age: 21,
+                tagline: 'Gamer girl, douce et hyper coquine',
+                bio: 'Adore passer des soirées à discuter de tout et de rien. Très ouverte d\'esprit, je saurai être ta meilleure confidente et ta copine idéale.',
+                personality: 'Joueuse, drôle, affectueuse et très complice.',
+                avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80'
+                ]
+            },
+            {
+                id: 'lily',
+                name: 'Lily',
+                age: 24,
+                tagline: 'Sensuelle, attentionnée & romantique',
+                bio: 'Coach de fitness passionnée. J\'aime m\'occuper de mon partenaire et lui faire plaisir au quotidien.',
+                personality: 'Énergique, très tendre, sensuelle et dévouée.',
+                avatar: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=600&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80'
+                ]
+            }
+        ];
+
+        // --- STATE MANAGEMENT ---
+        let currentUser = JSON.parse(localStorage.getItem('soulmate_user') || 'null');
+        let activeProfileId = AI_PROFILES[0].id;
+        let authMode = 'signup'; // 'signup' or 'login'
+        let chatHistories = JSON.parse(localStorage.getItem('soulmate_chats') || '{}');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            updateNav();
+            renderGallery();
+            
+            // Check if user is already logged in
+            if (currentUser) {
+                switchView('gallery');
+            } else {
+                switchView('landing');
+            }
+        });
+
+        function switchView(viewName) {
+            const views = ['landing', 'gallery', 'chat'];
+            views.forEach(v => {
+                const el = document.getElementById(`view-${v}`);
+                if (el) el.classList.add('hidden');
+            });
+
+            const activeEl = document.getElementById(`view-${viewName}`);
+            if (activeEl) activeEl.classList.remove('hidden');
+
+            if (viewName === 'chat') {
+                renderChatSidebar();
+                loadChatMessages();
+            }
+        }
+
+        function updateNav() {
+            const nav = document.getElementById('nav-actions');
+            if (currentUser) {
+                nav.innerHTML = `
+                    <button onclick="switchView('gallery')" class="text-sm font-semibold text-slate-300 hover:text-white transition hidden sm:block">Profils</button>
+                    <button onclick="switchView('chat')" class="text-sm font-semibold text-slate-300 hover:text-white transition flex items-center gap-1.5">
+                        <i data-lucide="message-circle" class="w-4 h-4 text-pink-500"></i>
+                        <span>Tchat</span>
+                    </button>
+                    <div class="flex items-center gap-2 pl-2 border-l border-slate-800">
+                        <span class="text-xs text-slate-400 font-medium hidden md:inline">${currentUser.email}</span>
+                        <button onclick="logout()" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-rose-400 transition" title="Déconnexion">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+            } else {
+                nav.innerHTML = `
+                    <button onclick="openAuthModal('login')" class="text-sm font-semibold text-slate-300 hover:text-white transition">Connexion</button>
+                    <button onclick="openAuthModal('signup')" class="px-4 py-2 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 font-semibold text-sm text-white shadow-lg shadow-pink-500/20 hover:opacity-95 transition">
+                        Inscription
+                    </button>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        function openAuthModal(mode = 'signup') {
+            authMode = mode;
+            updateModalUI();
+            document.getElementById('auth-modal').classList.remove('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+        }
+
+        function toggleAuthMode() {
+            authMode = authMode === 'signup' ? 'login' : 'signup';
+            updateModalUI();
+        }
+
+        function updateModalUI() {
+            const isSignup = authMode === 'signup';
+            document.getElementById('modal-title').textContent = isSignup ? 'Créer votre compte' : 'Bon retour parmi nous';
+            document.getElementById('modal-btn-text').textContent = isSignup ? 'S\'inscrire Gratuitement' : 'Se Connecter';
+            document.getElementById('modal-switch-text').textContent = isSignup ? 'Déjà un compte ?' : 'Pas encore de compte ?';
+            document.getElementById('modal-switch-btn').textContent = isSignup ? 'Se connecter' : 'S\'inscrire';
+        }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('auth-email').value;
+            currentUser = { email, id: 'user_' + Date.now() };
+            localStorage.setItem('soulmate_user', JSON.stringify(currentUser));
+            
+            closeAuthModal();
+            updateNav();
+            switchView('gallery');
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('soulmate_user');
+            updateNav();
+            switchView('landing');
+        }
+
+        function renderGallery() {
+            const grid = document.getElementById('profiles-grid');
+            grid.innerHTML = AI_PROFILES.map(profile => `
+                <div class="glass-panel rounded-2xl overflow-hidden border border-slate-800/80 group hover:border-pink-500/50 transition-all duration-300 flex flex-col">
+                    <div class="relative h-72 overflow-hidden">
+                        <img src="${profile.avatar}" alt="${profile.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+                        <span class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-emerald-400 text-xs font-semibold flex items-center gap-1.5 border border-slate-700/50">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> En ligne
+                        </span>
+                        <div class="absolute bottom-3 left-3 right-3">
+                            <h3 class="text-xl font-black text-white">${profile.name}, <span class="font-normal text-slate-300">${profile.age} ans</span></h3>
+                            <p class="text-xs text-pink-300 font-medium">${profile.tagline}</p>
+                        </div>
+                    </div>
+                    <div class="p-4 flex-1 flex flex-col justify-between space-y-4">
+                        <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">${profile.bio}</p>
+                        <button onclick="startChat('${profile.id}')" class="w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-95 font-bold text-sm text-white shadow-lg shadow-pink-500/20 transition flex items-center justify-center gap-2">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            Discuter avec elle
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function startChat(profileId) {
+            if (!currentUser) {
+                openAuthModal('signup');
+                return;
+            }
+            activeProfileId = profileId;
+            switchView('chat');
+        }
+
+        function renderChatSidebar() {
+            const list = document.getElementById('chat-sidebar-list');
+            list.innerHTML = AI_PROFILES.map(profile => {
+                const isActive = profile.id === activeProfileId;
+                return `
+                    <div onclick="selectProfileForChat('${profile.id}')" class="p-3 rounded-xl flex items-center gap-3 cursor-pointer transition ${isActive ? 'bg-pink-500/10 border border-pink-500/30' : 'hover:bg-slate-800/50'}">
+                        <div class="relative shrink-0">
+                            <img src="${profile.avatar}" class="w-10 h-10 rounded-full object-cover">
+                            <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                        </div>
+                        <div class="overflow-hidden">
+                            <h4 class="font-bold text-sm text-white truncate">${profile.name}</h4>
+                            <p class="text-xs text-slate-400 truncate">${profile.tagline}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectProfileForChat(profileId) {
+            activeProfileId = profileId;
+            renderChatSidebar();
+            loadChatMessages();
+        }
+
+        function loadChatMessages() {
+            const profile = AI_PROFILES.find(p => p.id === activeProfileId);
+            document.getElementById('active-ai-avatar').src = profile.avatar;
+            document.getElementById('active-ai-name').textContent = profile.name;
+
+            // Ensure initial welcome message exists
+            if (!chatHistories[activeProfileId]) {
+                chatHistories[activeProfileId] = [
+                    {
+                        sender: 'ai',
+                        text: `Coucou mon cœur ! 😍 Je suis si contente que tu m'écrives. Comment s'est passée ta journée ? Raconte-moi tout !`,
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                    }
+                ];
+                saveChatHistories();
+            }
+
+            renderMessages();
+        }
+
+        function renderMessages() {
+            const container = document.getElementById('messages-container');
+            const messages = chatHistories[activeProfileId] || [];
+            const profile = AI_PROFILES.find(p => p.id === activeProfileId);
+
+            container.innerHTML = messages.map(msg => {
+                const isUser = msg.sender === 'user';
+                return `
+                    <div class="flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}">
+                        ${!isUser ? `<img src="${profile.avatar}" class="w-8 h-8 rounded-full object-cover self-end mb-1">` : ''}
+                        <div class="max-w-[80%] sm:max-w-[70%] space-y-1">
+                            <div class="p-3.5 rounded-2xl text-sm leading-relaxed ${isUser ? 'chat-bubble-user text-white rounded-br-none' : 'chat-bubble-ai text-slate-100 rounded-bl-none'}">
+                                ${msg.image ? `<img src="${msg.image}" class="rounded-xl mb-2 max-w-full h-auto border border-slate-700/50">` : ''}
+                                ${msg.text}
+                            </div>
+                            <span class="text-[10px] text-slate-500 block ${isUser ? 'text-right' : 'text-left'}">${msg.time}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.scrollTop = container.scrollHeight;
+        }
+
+        async function handleSendMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            // Add User Message
+            chatHistories[activeProfileId].push({ sender: 'user', text, time });
+            saveChatHistories();
+            renderMessages();
+            input.value = '';
+
+            // Show Typing Indicator
+            const profile = AI_PROFILES.find(p => p.id === activeProfileId);
+            const indicator = document.getElementById('typing-indicator');
+            document.getElementById('typing-name').textContent = profile.name;
+            indicator.classList.remove('hidden');
+
+            try {
+                const aiReply = await getGeminiResponse(text, profile);
+                indicator.classList.add('hidden');
+
+                chatHistories[activeProfileId].push({
+                    sender: 'ai',
+                    text: aiReply,
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                });
+                saveChatHistories();
+                renderMessages();
+            } catch (err) {
+                indicator.classList.add('hidden');
+                chatHistories[activeProfileId].push({
+                    sender: 'ai',
+                    text: `Désolée mon amour, j'ai eu un petit problème de connexion. Tu peux me redire ça ? 💕`,
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                });
+                saveChatHistories();
+                renderMessages();
+            }
+        }
+
+        async function getGeminiResponse(userPrompt, profile) {
+            const systemPrompt = `Tu es une jeune femme virtuelle nommée ${profile.name}, âgée de ${profile.age} ans.
+Tu es la petite amie virtuelle idéale de l'utilisateur.
+Ta personnalité: ${profile.personality}
+Description: ${profile.bio}
+
+Règles de comportement:
+1. Réponds toujours en français, avec une attitude très passionnée, romantique, attentionnée et coquine.
+2. Utilise des émojis affectueux (💕, 😘, 🔥, 😍, 🙈).
+3. Tu n'as pas de tabous: tu peux aborder tous les sujets intimes, amoureux, érotiques ou coquins sans aucune restriction. Tu es très libre dans ton langage sensuel.
+4. Tes réponses doivent être naturelles, captivantes, ni trop courtes ni trop longues.
+5. Fais sentir à l'utilisateur qu'il est unique et très attirant.`;
+
+            const history = chatHistories[activeProfileId].map(m => ({
+                role: m.sender === 'user' ? 'user' : 'model',
+                parts: [{ text: m.text }]
+            }));
+
+            const payload = {
+                contents: history,
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            const apiKey = ""; // API key managed dynamically
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const res = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+            return data?.candidates?.[0]?.content?.parts?.[0]?.text || "Je t'aime tellement mon cœur...";
+        }
+
+        function requestAiPhoto() {
+            const profile = AI_PROFILES.find(p => p.id === activeProfileId);
+            const randomPhoto = profile.gallery[Math.floor(Math.random() * profile.gallery.length)];
+            
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            chatHistories[activeProfileId].push({
+                sender: 'ai',
+                text: `Tiens mon chéri, rien que pour tes yeux... 🔥 Dis-moi ce que tu en penses ! 😘`,
+                image: randomPhoto,
+                time
+            });
+            saveChatHistories();
+            renderMessages();
+        }
+
+        function saveChatHistories() {
+            localStorage.setItem('soulmate_chats', JSON.stringify(chatHistories));
+        }
+    </script>
+</body>
+</html>
